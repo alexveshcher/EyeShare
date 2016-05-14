@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import me.kevingleason.pnwebrtc.PnPeerConnectionClient;
 
-
+/** Activity starts for volunteer when blind needs help */
 public class IncomingCallActivity extends Activity {
     private SharedPreferences mSharedPreferences;
     private String username;

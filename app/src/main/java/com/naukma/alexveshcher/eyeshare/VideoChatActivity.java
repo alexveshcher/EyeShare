@@ -1,6 +1,6 @@
 package com.naukma.alexveshcher.eyeshare;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +32,7 @@ import me.kevingleason.pnwebrtc.PnRTCClient;
  * This chat will begin/subscribe to a video chat.
  * REQUIRED: The intent must contain a
  */
-public class VideoChatActivity extends ListActivity {
+public class VideoChatActivity extends Activity {
     public static final String VIDEO_TRACK_ID = "videoPN";
     public static final String AUDIO_TRACK_ID = "audioPN";
     public static final String LOCAL_MEDIA_STREAM_ID = "localStreamPN";
@@ -44,8 +42,6 @@ public class VideoChatActivity extends ListActivity {
     private VideoRenderer.Callbacks localRender;
     private VideoRenderer.Callbacks remoteRender;
     private GLSurfaceView videoView;
-    private EditText mChatEditText;
-    private ListView mChatList;
     private TextView mCallStatus;
 
     private String username;
@@ -67,7 +63,6 @@ public class VideoChatActivity extends ListActivity {
             return;
         }
         this.username      = extras.getString(Constants.USER_NAME, "");
-        this.mChatList     = getListView();
         this.mCallStatus   = (TextView) findViewById(R.id.call_status);
 
 
@@ -85,11 +80,11 @@ public class VideoChatActivity extends ListActivity {
 
         // Returns the number of cams & front/back face device name
         int camNumber = VideoCapturerAndroid.getDeviceCount();
-        String frontFacingCam = VideoCapturerAndroid.getNameOfFrontFacingDevice();
+        //String frontFacingCam = VideoCapturerAndroid.getNameOfFrontFacingDevice();
         String backFacingCam = VideoCapturerAndroid.getNameOfBackFacingDevice();
 
         // Creates a VideoCapturerAndroid instance for the device name
-        VideoCapturer capturer = VideoCapturerAndroid.create(frontFacingCam);
+        VideoCapturer capturer = VideoCapturerAndroid.create(backFacingCam);
 
         // First create a Video Source, then we can make a Video Track
         localVideoSource = pcFactory.createVideoSource(capturer, this.pnRTCClient.videoConstraints());
