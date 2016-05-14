@@ -9,12 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.naukma.alexveshcher.eyeshare.adapters.HistoryAdapter;
-import com.naukma.alexveshcher.eyeshare.adt.HistoryItem;
 import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
@@ -24,8 +21,6 @@ import com.pubnub.api.PubnubException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends ListActivity {
     private SharedPreferences mSharedPreferences;
@@ -33,8 +28,6 @@ public class MainActivity extends ListActivity {
     private String stdByChannel;
     private Pubnub mPubNub;
 
-    private ListView mHistoryList;
-    private HistoryAdapter mHistoryAdapter;
     private EditText mCallNumET;
     private TextView mUsernameTV;
 
@@ -53,15 +46,13 @@ public class MainActivity extends ListActivity {
         this.username     = this.mSharedPreferences.getString(Constants.USER_NAME, "");
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
 
-        this.mHistoryList = getListView();
         this.mCallNumET   = (EditText) findViewById(R.id.call_num);
         this.mUsernameTV  = (TextView) findViewById(R.id.main_username);
 
         this.mUsernameTV.setText(this.username);
         initPubNub();
 
-        this.mHistoryAdapter = new HistoryAdapter(this, new ArrayList<HistoryItem>(), this.mPubNub);
-        this.mHistoryList.setAdapter(this.mHistoryAdapter);
+
     }
 
 

@@ -1,7 +1,6 @@
 package com.naukma.alexveshcher.eyeshare;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -9,19 +8,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.naukma.alexveshcher.eyeshare.adapters.ChatAdapter;
-import com.naukma.alexveshcher.eyeshare.adt.ChatMessage;
 import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.naukma.alexveshcher.eyeshare.util.LogRTCListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
 import org.webrtc.MediaStream;
@@ -32,9 +26,6 @@ import org.webrtc.VideoRenderer;
 import org.webrtc.VideoRendererGui;
 import org.webrtc.VideoSource;
 import org.webrtc.VideoTrack;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import me.kevingleason.pnwebrtc.PnPeer;
 import me.kevingleason.pnwebrtc.PnRTCClient;
@@ -55,7 +46,6 @@ public class VideoChatActivity extends ListActivity {
     private GLSurfaceView videoView;
     private EditText mChatEditText;
     private ListView mChatList;
-    private ChatAdapter mChatAdapter;
     private TextView mCallStatus;
 
     private String username;
@@ -78,13 +68,8 @@ public class VideoChatActivity extends ListActivity {
         }
         this.username      = extras.getString(Constants.USER_NAME, "");
         this.mChatList     = getListView();
-        this.mChatEditText = (EditText) findViewById(R.id.chat_input);
         this.mCallStatus   = (TextView) findViewById(R.id.call_status);
 
-        // Set up the List View for chatting
-        List<ChatMessage> ll = new LinkedList<ChatMessage>();
-        mChatAdapter = new ChatAdapter(this, ll);
-        mChatList.setAdapter(mChatAdapter);
 
 
         // First, we initiate the PeerConnectionFactory with our application context and some options.
@@ -237,28 +222,6 @@ public class VideoChatActivity extends ListActivity {
     }
 
 
-    public void sendMessage(View view) {
-        String message = mChatEditText.getText().toString();
-        if (message.equals("")) return; // Return if empty
-        ChatMessage chatMsg = new ChatMessage(this.username, message, System.currentTimeMillis());
-        mChatAdapter.addMessage(chatMsg);
-        JSONObject messageJSON = new JSONObject();
-        try {
-            messageJSON.put(Constants.JSON_MSG_UUID, chatMsg.getSender());
-            messageJSON.put(Constants.JSON_MSG, chatMsg.getMessage());
-            messageJSON.put(Constants.JSON_TIME, chatMsg.getTimeStamp());
-            this.pnRTCClient.transmitAll(messageJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Hide keyboard when you send a message.
-        View focusView = this.getCurrentFocus();
-        if (focusView != null) {
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-        mChatEditText.setText("");
-    }
 
     /**
      * LogRTCListener is used for debugging purposes, it prints all RTC messages.
@@ -296,26 +259,7 @@ public class VideoChatActivity extends ListActivity {
             });
         }
 
-        @Override
-        public void onMessage(PnPeer peer, Object message) {
-            super.onMessage(peer, message);  // Will log values
-            if (!(message instanceof JSONObject)) return; //Ignore if not JSONObject
-            JSONObject jsonMsg = (JSONObject) message;
-            try {
-                String uuid = jsonMsg.getString(Constants.JSON_MSG_UUID);
-                String msg  = jsonMsg.getString(Constants.JSON_MSG);
-                long   time = jsonMsg.getLong(Constants.JSON_TIME);
-                final ChatMessage chatMsg = new ChatMessage(uuid, msg, time);
-                VideoChatActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mChatAdapter.addMessage(chatMsg);
-                    }
-                });
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
+
 
         @Override
         public void onPeerConnectionClosed(PnPeer peer) {
