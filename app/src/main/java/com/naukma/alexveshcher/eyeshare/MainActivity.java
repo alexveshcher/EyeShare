@@ -1,6 +1,6 @@
 package com.naukma.alexveshcher.eyeshare;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
     private SharedPreferences mSharedPreferences;
     private String username;
     private String stdByChannel;
@@ -46,7 +46,7 @@ public class MainActivity extends ListActivity {
         this.username     = this.mSharedPreferences.getString(Constants.USER_NAME, "");
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
 
-        this.mCallNumET   = (EditText) findViewById(R.id.call_num);
+        //this.mCallNumET   = (EditText) findViewById(R.id.call_num);
         this.mUsernameTV  = (TextView) findViewById(R.id.main_username);
 
         this.mUsernameTV.setText(this.username);

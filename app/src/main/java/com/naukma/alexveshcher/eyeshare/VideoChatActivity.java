@@ -37,6 +37,8 @@ public class VideoChatActivity extends Activity {
     public static final String AUDIO_TRACK_ID = "audioPN";
     public static final String LOCAL_MEDIA_STREAM_ID = "localStreamPN";
 
+    public String role = "d";
+
     private PnRTCClient pnRTCClient;
     private VideoSource localVideoSource;
     private VideoRenderer.Callbacks localRender;
@@ -54,6 +56,7 @@ public class VideoChatActivity extends Activity {
         setContentView(R.layout.activity_video_chat);
 
         Bundle extras = getIntent().getExtras();
+        role = extras.getString("ROLE");
         if (extras == null || !extras.containsKey(Constants.USER_NAME)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -66,14 +69,25 @@ public class VideoChatActivity extends Activity {
         this.mCallStatus   = (TextView) findViewById(R.id.call_status);
 
 
-
+        Log.d("role",role);
         // First, we initiate the PeerConnectionFactory with our application context and some options.
-        PeerConnectionFactory.initializeAndroidGlobals(
-                this,  // Context
-                true,  // Audio Enabled
-                true,  // Video Enabled
-                true,  // Hardware Acceleration Enabled
-                null); // Render EGL Context
+        if(role.equals("VOLUNTEER")){
+            PeerConnectionFactory.initializeAndroidGlobals(
+                    this,  // Context
+                    true,  // Audio Enabled
+                    false,  // Video Enabled
+                    true,  // Hardware Acceleration Enabled
+                    null); // Render EGL Context
+        }
+
+        if(role.equals("BLIND")){
+            PeerConnectionFactory.initializeAndroidGlobals(
+                    this,  // Context
+                    true,  // Audio Enabled
+                    true,  // Video Enabled
+                    true,  // Hardware Acceleration Enabled
+                    null); // Render EGL Context
+        }
 
         PeerConnectionFactory pcFactory = new PeerConnectionFactory();
         this.pnRTCClient = new PnRTCClient(Constants.PUB_KEY, Constants.SUB_KEY, this.username);

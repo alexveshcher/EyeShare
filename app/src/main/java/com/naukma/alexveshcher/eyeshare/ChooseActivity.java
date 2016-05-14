@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ChooseActivity extends Activity {
+    public final static String ROLE = "ROLE";
+
     private Pubnub mPubNub;
     private String username = "blind";
     private String stdByChannel;
@@ -82,6 +84,7 @@ public class ChooseActivity extends Activity {
                             Intent intent = new Intent(ChooseActivity.this, VideoChatActivity.class);
                             intent.putExtra(Constants.USER_NAME, username);
                             intent.putExtra(Constants.CALL_USER, callNum);  // Only accept from this number?
+                            intent.putExtra(ROLE,"BLIND");
                             startActivity(intent);
                         }
                     });

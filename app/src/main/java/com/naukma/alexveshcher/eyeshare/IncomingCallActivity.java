@@ -20,6 +20,7 @@ import me.kevingleason.pnwebrtc.PnPeerConnectionClient;
 
 /** Activity starts for volunteer when blind needs help */
 public class IncomingCallActivity extends Activity {
+    public final static String ROLE = "ROLE";
     private SharedPreferences mSharedPreferences;
     private String username;
     private String callUser;
@@ -85,6 +86,7 @@ public class IncomingCallActivity extends Activity {
         Intent intent = new Intent(IncomingCallActivity.this, VideoChatActivity.class);
         intent.putExtra(Constants.USER_NAME, this.username);
         intent.putExtra(Constants.CALL_USER, this.callUser);
+        intent.putExtra(ROLE,"VOLUNTEER");
         startActivity(intent);
     }
 
