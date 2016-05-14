@@ -1,12 +1,10 @@
-package me.kevingleason.androidrtc;
+package com.naukma.alexveshcher.eyeshare;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.naukma.alexveshcher.eyeshare.adapters.ChatAdapter;
+import com.naukma.alexveshcher.eyeshare.adt.ChatMessage;
+import com.naukma.alexveshcher.eyeshare.util.Constants;
+import com.naukma.alexveshcher.eyeshare.util.LogRTCListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
-import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
-import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
 import org.webrtc.VideoCapturer;
 import org.webrtc.VideoCapturerAndroid;
@@ -35,10 +36,6 @@ import org.webrtc.VideoTrack;
 import java.util.LinkedList;
 import java.util.List;
 
-import me.kevingleason.androidrtc.adapters.ChatAdapter;
-import me.kevingleason.androidrtc.adt.ChatMessage;
-import me.kevingleason.androidrtc.util.Constants;
-import me.kevingleason.androidrtc.util.LogRTCListener;
 import me.kevingleason.pnwebrtc.PnPeer;
 import me.kevingleason.pnwebrtc.PnRTCClient;
 

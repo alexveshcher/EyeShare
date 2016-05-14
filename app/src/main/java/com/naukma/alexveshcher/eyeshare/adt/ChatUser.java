@@ -1,6 +1,6 @@
-package me.kevingleason.androidrtc.adt;
+package com.naukma.alexveshcher.eyeshare.adt;
 
-import me.kevingleason.androidrtc.util.Constants;
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 
 /**
  * Created by GleasonK on 7/31/15.

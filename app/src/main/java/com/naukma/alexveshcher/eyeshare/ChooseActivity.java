@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc;
+package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 import com.pubnub.api.PubnubError;
@@ -15,8 +16,6 @@ import com.pubnub.api.PubnubException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import me.kevingleason.androidrtc.util.Constants;
 
 public class ChooseActivity extends Activity {
     private Pubnub mPubNub;

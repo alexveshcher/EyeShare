@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc;
+package com.naukma.alexveshcher.eyeshare;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.naukma.alexveshcher.eyeshare.adapters.HistoryAdapter;
+import com.naukma.alexveshcher.eyeshare.adt.HistoryItem;
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 import com.pubnub.api.PubnubError;
@@ -22,10 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import me.kevingleason.androidrtc.adapters.HistoryAdapter;
-import me.kevingleason.androidrtc.adt.HistoryItem;
-import me.kevingleason.androidrtc.util.Constants;
 
 
 public class MainActivity extends ListActivity {

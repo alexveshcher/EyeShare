@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc;
+package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,13 +10,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import me.kevingleason.androidrtc.util.Constants;
 import me.kevingleason.pnwebrtc.PnPeerConnectionClient;
 
 

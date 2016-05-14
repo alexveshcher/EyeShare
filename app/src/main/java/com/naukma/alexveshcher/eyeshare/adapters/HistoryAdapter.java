@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc.adapters;
+package com.naukma.alexveshcher.eyeshare.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.naukma.alexveshcher.eyeshare.MainActivity;
+import com.naukma.alexveshcher.eyeshare.R;
+import com.naukma.alexveshcher.eyeshare.adt.ChatUser;
+import com.naukma.alexveshcher.eyeshare.adt.HistoryItem;
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 
@@ -18,18 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import me.kevingleason.androidrtc.MainActivity;
-import me.kevingleason.androidrtc.R;
-import me.kevingleason.androidrtc.adt.ChatUser;
-import me.kevingleason.androidrtc.adt.HistoryItem;
-import me.kevingleason.androidrtc.util.Constants;
 
 /**
  * Created by GleasonK on 7/31/15.

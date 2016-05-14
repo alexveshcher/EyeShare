@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc.util;
+package com.naukma.alexveshcher.eyeshare.util;
 
 import android.util.Log;
 

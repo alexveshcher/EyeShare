@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.kevingleason.androidrtc">
+    package="com.naukma.alexveshcher.eyeshare">
 
     <!-- WebRTC Dependencies -->
     <uses-feature android:name="android.hardware.camera" />
@@ -32,26 +32,26 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.naukma.alexveshcher.eyeshare.MainActivity"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".VideoChatActivity"
+            android:name="com.naukma.alexveshcher.eyeshare.VideoChatActivity"
             android:label="@string/title_activity_video_chat"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.naukma.alexveshcher.eyeshare.MainActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.kevingleason.androidrtc.MainActivity" />
+                android:value="com.naukma.alexveshcher.eyeshare.MainActivity" />
         </activity>
         <activity
-            android:name=".IncomingCallActivity"
+            android:name="com.naukma.alexveshcher.eyeshare.IncomingCallActivity"
             android:label="@string/title_activity_incoming_call"></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.naukma.alexveshcher.eyeshare.LoginActivity"
             android:label="@string/title_activity_login"></activity>
-        <activity android:name=".ChooseActivity">
+        <activity android:name="com.naukma.alexveshcher.eyeshare.ChooseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

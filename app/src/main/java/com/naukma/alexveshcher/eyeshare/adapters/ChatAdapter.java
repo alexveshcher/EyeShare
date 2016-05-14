@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc.adapters;
+package com.naukma.alexveshcher.eyeshare.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,12 +12,12 @@ import android.view.animation.AnimationSet;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.naukma.alexveshcher.eyeshare.R;
+import com.naukma.alexveshcher.eyeshare.adt.ChatMessage;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-
-import me.kevingleason.androidrtc.R;
-import me.kevingleason.androidrtc.adt.ChatMessage;
 
 
 /**

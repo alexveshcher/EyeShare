@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc.adt;
+package com.naukma.alexveshcher.eyeshare.adt;
 
 /**
  * Created by GleasonK on 7/31/15.

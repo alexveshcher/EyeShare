@@ -1,4 +1,4 @@
-package me.kevingleason.androidrtc;
+package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import me.kevingleason.androidrtc.util.Constants;
+import com.naukma.alexveshcher.eyeshare.util.Constants;
 
 /**
  * Login Activity for the first time the app is opened, or when a user clicks the sign out button.
