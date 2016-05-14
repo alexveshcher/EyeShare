@@ -20,5 +20,7 @@
     <!-- Incoming Call Activity -->
     <string name="incoming_call">Incoming Call&#8230;</string>
     <string name="incoming_call_from">Kevin Gleason</string>
+    <string name="i_can_help">I can help</string>
+    <string name="i_need_help">I need help</string>
 
 </resources>
