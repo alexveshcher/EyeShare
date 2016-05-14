@@ -18,9 +18,9 @@
     <string name="no_call_history">No call History\n\nRecent calls appear here.</string>
 
     <!-- Incoming Call Activity -->
-    <string name="incoming_call">Incoming Call&#8230;</string>
-    <string name="incoming_call_from">Kevin Gleason</string>
+    <string name="incoming_call_from">Blind</string>
     <string name="i_can_help">I can help</string>
     <string name="i_need_help">I need help</string>
+    <string name="your_help_is_needed">Your help is needed</string>
 
 </resources>

@@ -31,6 +31,8 @@ public class ChooseActivity extends Activity {
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
         initPubNub();
     }
+
+    /**When user clicks 'I can help' */
     public void volunteer(View view){
         String username = "volunteer";
 
