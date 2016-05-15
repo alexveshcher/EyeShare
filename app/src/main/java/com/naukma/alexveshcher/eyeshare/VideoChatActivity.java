@@ -42,7 +42,7 @@ public class VideoChatActivity extends Activity {
     private PnRTCClient pnRTCClient;
     private VideoSource localVideoSource;
     private VideoRenderer.Callbacks localRender;
-    private VideoRenderer.Callbacks remoteRender;
+    //private VideoRenderer.Callbacks remoteRender;
     private GLSurfaceView videoView;
     private TextView mCallStatus;
 
@@ -71,23 +71,14 @@ public class VideoChatActivity extends Activity {
 
         Log.d("role",role);
         // First, we initiate the PeerConnectionFactory with our application context and some options.
-        if(role.equals("VOLUNTEER")){
-            PeerConnectionFactory.initializeAndroidGlobals(
-                    this,  // Context
-                    true,  // Audio Enabled
-                    false,  // Video Enabled
-                    true,  // Hardware Acceleration Enabled
-                    null); // Render EGL Context
-        }
 
-        if(role.equals("BLIND")){
             PeerConnectionFactory.initializeAndroidGlobals(
                     this,  // Context
                     true,  // Audio Enabled
                     true,  // Video Enabled
                     true,  // Hardware Acceleration Enabled
                     null); // Render EGL Context
-        }
+
 
         PeerConnectionFactory pcFactory = new PeerConnectionFactory();
         this.pnRTCClient = new PnRTCClient(Constants.PUB_KEY, Constants.SUB_KEY, this.username);
@@ -117,7 +108,7 @@ public class VideoChatActivity extends Activity {
 
         // Now that VideoRendererGui is ready, we can get our VideoRenderer.
         // IN THIS ORDER. Effects which is on top or bottom
-        remoteRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
+        //remoteRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
         localRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, true);
 
         // We start out with an empty MediaStream object, created with help from our PeerConnectionFactory
@@ -226,7 +217,7 @@ public class VideoChatActivity extends Activity {
     }
 
     private void endCall() {
-        startActivity(new Intent(VideoChatActivity.this, MainActivity.class));
+        startActivity(new Intent(VideoChatActivity.this, ChooseActivity.class));
         finish();
     }
 
@@ -259,9 +250,10 @@ public class VideoChatActivity extends Activity {
                     try {
                         if(remoteStream.audioTracks.size()==0 || remoteStream.videoTracks.size()==0) return;
                         mCallStatus.setVisibility(View.GONE);
-                        remoteStream.videoTracks.get(0).addRenderer(new VideoRenderer(remoteRender));
-                        VideoRendererGui.update(remoteRender, 0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
-                        VideoRendererGui.update(localRender, 72, 65, 25, 25, VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
+                        //remoteStream.videoTracks.get(0).addRenderer(new VideoRenderer(remoteRender));
+                        //VideoRendererGui.update(remoteRender, 0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
+                        //VideoRendererGui.update(localRender, 72, 65, 25, 25, VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
+                        VideoRendererGui.update(localRender, 0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
                     }
                     catch (Exception e){ e.printStackTrace(); }
                 }
@@ -281,7 +273,7 @@ public class VideoChatActivity extends Activity {
                 }
             });
             try {Thread.sleep(1500);} catch (InterruptedException e){e.printStackTrace();}
-            Intent intent = new Intent(VideoChatActivity.this, MainActivity.class);
+            Intent intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
             startActivity(intent);
             finish();
         }
