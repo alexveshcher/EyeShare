@@ -127,7 +127,7 @@ public class VideoChatActivity extends Activity {
             //localRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, true);
         }
         else
-            localRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, true);
+            localRender = VideoRendererGui.create(0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
 
         // We start out with an empty MediaStream object, created with help from our PeerConnectionFactory
         //  Note that LOCAL_MEDIA_STREAM_ID can be any string

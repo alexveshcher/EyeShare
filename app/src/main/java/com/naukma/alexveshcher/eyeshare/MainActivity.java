@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +25,6 @@ public class MainActivity extends Activity {
     private String username;
     private String stdByChannel;
     private Pubnub mPubNub;
-
-    private EditText mCallNumET;
     private TextView mUsernameTV;
 
     @Override
@@ -52,7 +48,18 @@ public class MainActivity extends Activity {
         this.mUsernameTV.setText(this.username);
         initPubNub();
 
+        /*
+        mPubNub.hereNow(true, false, new Callback() {
+            @Override
+            public void successCallback(String channel, Object message) {
+                Log.d("lolo","HERE NOW : " + message);
+            }
 
+            @Override
+            public void errorCallback(String channel, PubnubError error) {
+                Log.d("lolod","HERE NOW : " + error);
+            }
+        });*/
     }
 
 
@@ -143,60 +150,6 @@ public class MainActivity extends Activity {
             Log.d("HERE","HEREEEE");
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Take the user to a video screen. USER_NAME is a required field.
-     * @param view button that is clicked to trigger toVideo
-     */
-    public void makeCall(View view){
-        String callNum = mCallNumET.getText().toString();
-        if (callNum.isEmpty() || callNum.equals(this.username)){
-            showToast("Enter a valid user ID to call.");
-            return;
-        }
-        dispatchCall(callNum);
-    }
-
-    /**TODO: Debate who calls who. Should one be on standby? Or use State API for busy/available
-     * Check that user is online. If they are, dispatch the call by publishing to their standby
-     *   channel. If the publish was successful, then change activities over to the video chat.
-     * The called user will then have the option to accept of decline the call. If they accept,
-     *   they will be brought to the video chat activity as well, to connect video/audio. If
-     *   they decline, a hangup will be issued, and the VideoChat adapter's onHangup callback will
-     *   be invoked.
-     * @param callNum Number to publish a call to.
-     */
-    public void dispatchCall(final String callNum){
-        final String callNumStdBy = callNum + Constants.STDBY_SUFFIX;
-        this.mPubNub.hereNow(callNumStdBy, new Callback() {
-            @Override
-            public void successCallback(String channel, Object message) {
-                Log.d("MA-dC", "HERE_NOW: " +" CH - " + callNumStdBy + " " + message.toString());
-                try {
-                    int occupancy = ((JSONObject) message).getInt(Constants.JSON_OCCUPANCY);
-                    if (occupancy == 0) {
-                        showToast("User is not online!");
-                        return;
-                    }
-                    JSONObject jsonCall = new JSONObject();
-                    jsonCall.put(Constants.JSON_CALL_USER, username);
-                    jsonCall.put(Constants.JSON_CALL_TIME, System.currentTimeMillis());
-                    mPubNub.publish(callNumStdBy, jsonCall, new Callback() {
-                        @Override
-                        public void successCallback(String channel, Object message) {
-                            Log.d("MA-dC", "SUCCESS: " + message.toString());
-                            Intent intent = new Intent(MainActivity.this, VideoChatActivity.class);
-                            intent.putExtra(Constants.USER_NAME, username);
-                            intent.putExtra(Constants.CALL_USER, callNum);  // Only accept from this number?
-                            startActivity(intent);
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     /**
