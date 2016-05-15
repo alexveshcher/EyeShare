@@ -72,7 +72,16 @@ public class VideoChatActivity extends Activity {
         Log.d("role",role);
         // First, we initiate the PeerConnectionFactory with our application context and some options.
 
+        if(role.equals("VOLUNTEER")){
             PeerConnectionFactory.initializeAndroidGlobals(
+                    this,  // Context
+                    true,  // Audio Enabled
+                    false,  // Video Enabled
+                    true,  // Hardware Acceleration Enabled
+                    null); // Render EGL Context
+        }
+
+        else   PeerConnectionFactory.initializeAndroidGlobals(
                     this,  // Context
                     true,  // Audio Enabled
                     true,  // Video Enabled
@@ -92,8 +101,12 @@ public class VideoChatActivity extends Activity {
         VideoCapturer capturer = VideoCapturerAndroid.create(backFacingCam);
 
         // First create a Video Source, then we can make a Video Track
-        localVideoSource = pcFactory.createVideoSource(capturer, this.pnRTCClient.videoConstraints());
-        VideoTrack localVideoTrack = pcFactory.createVideoTrack(VIDEO_TRACK_ID, localVideoSource);
+        VideoTrack localVideoTrack = null;
+        if(role.equals("BLIND")){
+            localVideoSource = pcFactory.createVideoSource(capturer, this.pnRTCClient.videoConstraints());
+            localVideoTrack = pcFactory.createVideoTrack(VIDEO_TRACK_ID, localVideoSource);
+        }
+
 
         // First we create an AudioSource then we can create our AudioTrack
         AudioSource audioSource = pcFactory.createAudioSource(this.pnRTCClient.audioConstraints());
@@ -121,7 +134,8 @@ public class VideoChatActivity extends Activity {
         MediaStream mediaStream = pcFactory.createLocalMediaStream(LOCAL_MEDIA_STREAM_ID);
 
         // Now we can add our tracks.
-        mediaStream.addTrack(localVideoTrack);
+        if(role.equals("BLIND"))
+            mediaStream.addTrack(localVideoTrack);
         mediaStream.addTrack(localAudioTrack);
 
         // First attach the RTC Listener so that callback events will be triggered
@@ -169,14 +183,16 @@ public class VideoChatActivity extends Activity {
     protected void onPause() {
         super.onPause();
         this.videoView.onPause();
-        this.localVideoSource.stop();
+        if(role.equals("BLIND"))
+            this.localVideoSource.stop();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         this.videoView.onResume();
-        this.localVideoSource.restart();
+        if(role.equals("BLIND"))
+            this.localVideoSource.restart();
     }
 
     @Override
