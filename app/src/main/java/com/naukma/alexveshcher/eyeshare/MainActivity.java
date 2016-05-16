@@ -2,7 +2,6 @@ package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +20,7 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends Activity {
-    private SharedPreferences mSharedPreferences;
+    //private SharedPreferences mSharedPreferences;
     private String username;
     private String stdByChannel;
     private Pubnub mPubNub;
@@ -32,19 +31,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra(Constants.USER_NAME);
+
+        /*
         this.mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         if (!this.mSharedPreferences.contains(Constants.USER_NAME)){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
             return;
-        }
-        this.username     = this.mSharedPreferences.getString(Constants.USER_NAME, "");
+        }*/
+        //this.username     = this.mSharedPreferences.getString(Constants.USER_NAME, "");
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
-
-        //this.mCallNumET   = (EditText) findViewById(R.id.call_num);
         this.mUsernameTV  = (TextView) findViewById(R.id.main_username);
-
         this.mUsernameTV.setText(this.username);
         initPubNub();
 
@@ -63,7 +63,6 @@ public class MainActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void errorCallback(String channel, PubnubError error) {
                 Log.d("lolod","HERE NOW : " + error);
@@ -188,16 +187,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void getUserStatus(String userId){
-        String stdByUser = userId + Constants.STDBY_SUFFIX;
-        this.mPubNub.getState(stdByUser, userId, new Callback() {
-            @Override
-            public void successCallback(String channel, Object message) {
-                Log.d("MA-gUS", "User Status: " + message.toString());
-            }
-        });
-    }
-
     /**
      * Ensures that toast is run on the UI thread.
      * @param message
@@ -213,15 +202,14 @@ public class MainActivity extends Activity {
 
     /**
      * Log out, remove username from SharedPreferences, unsubscribe from PubNub, and send user back
-     *   to the LoginActivity
+     *   to the ChooseActivity
      */
     public void signOut(){
         this.mPubNub.unsubscribeAll();
-        SharedPreferences.Editor edit = this.mSharedPreferences.edit();
-        edit.remove(Constants.USER_NAME);
-        edit.apply();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("oldUsername", this.username);
+        //SharedPreferences.Editor edit = this.mSharedPreferences.edit();
+        //edit.remove(Constants.USER_NAME);
+        //edit.apply();
+        Intent intent = new Intent(this, ChooseActivity.class);
         startActivity(intent);
     }
 }

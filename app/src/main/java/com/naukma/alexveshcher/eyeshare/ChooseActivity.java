@@ -3,7 +3,6 @@ package com.naukma.alexveshcher.eyeshare;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -41,28 +40,23 @@ public class ChooseActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
-
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
         initPubNub();
         view = (TextView) findViewById(R.id.online);
         getOnlineUsersCount();
         getOnlineUsers();
-
-
-        //showToast(user);
     }
 
     /**When user clicks 'I can help' */
     public void volunteer(View view){
-        String username = "volunteer";
         //showToast(channels.get(0)+channels.get(1));
         if(isInternetAvailable()){
-            SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-            SharedPreferences.Editor edit = sp.edit();
-            edit.putString(Constants.USER_NAME, username);
-            edit.apply();
+            //SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+            //SharedPreferences.Editor edit = sp.edit();
+            //edit.putString(Constants.USER_NAME, username);
+            //edit.apply();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
         else
@@ -159,7 +153,7 @@ public class ChooseActivity extends Activity  {
                     try {
                         if (!jsonMsg.has(Constants.JSON_CALL_USER)) return;     //Ignore Signaling messages.
                         String user = jsonMsg.getString(Constants.JSON_CALL_USER);
-                        dispatchIncomingCall(user);
+                        //dispatchIncomingCall(user);
                     } catch (JSONException e){
                         e.printStackTrace();
                     }
@@ -182,17 +176,14 @@ public class ChooseActivity extends Activity  {
         }
     }
 
-    /**
-     * Handle incoming calls. TODO: Implement an accept/reject functionality.
-     * @param userId
-     */
+    /*
     private void dispatchIncomingCall(String userId){
         showToast("Call from: " + userId);
         Intent intent = new Intent(ChooseActivity.this, IncomingCallActivity.class);
         intent.putExtra(Constants.USER_NAME, username);
         intent.putExtra(Constants.CALL_USER, userId);
         startActivity(intent);
-    }
+    }*/
 
     private void setUserStatus(String status){
         try {
@@ -268,18 +259,16 @@ public class ChooseActivity extends Activity  {
                 try {
                     JSONObject users = jsonMsg.getJSONObject("channels");
                     Iterator<String> keys=users.keys();
-                    while(keys.hasNext())
-                    {
+                    while(keys.hasNext()) {
                         String key=keys.next();
-                        String s2 = key.substring(0,key.length()-6);
-
-
-                        Log.d("keys",s2);
-                        channels.add(s2);
-                        //user=key;
-                        //mutableMessage.setValue(key);
+                        //rmk
+                        if(key.length()>6 && !key.equals("blind-stdby") && !key.equals("volunteer-stdby")&& !key.equals("volunteer")) {
+                            String s2 = key.substring(0, key.length() - 6);
+                            Log.d("keys",s2);
+                            channels.add(s2);
+                        }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Log.d("err",e.toString());
                 }
             }

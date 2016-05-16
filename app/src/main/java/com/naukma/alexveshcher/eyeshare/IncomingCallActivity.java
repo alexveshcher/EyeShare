@@ -2,7 +2,6 @@ package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +20,7 @@ import me.kevingleason.pnwebrtc.PnPeerConnectionClient;
 /** Activity starts for volunteer when blind needs help */
 public class IncomingCallActivity extends Activity {
     public final static String ROLE = "ROLE";
-    private SharedPreferences mSharedPreferences;
+    //private SharedPreferences mSharedPreferences;
     private String username;
     private String callUser;
 
@@ -33,7 +32,10 @@ public class IncomingCallActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_call);
 
-        this.mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        Intent intent1 = getIntent();
+        username = intent1.getStringExtra(Constants.USER_NAME);
+
+        /*this.mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         if (!this.mSharedPreferences.contains(Constants.USER_NAME)){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -41,6 +43,7 @@ public class IncomingCallActivity extends Activity {
             return;
         }
         this.username = this.mSharedPreferences.getString(Constants.USER_NAME, "");
+        */
 
         Bundle extras = getIntent().getExtras();
         if (extras==null || !extras.containsKey(Constants.CALL_USER)){
@@ -100,6 +103,7 @@ public class IncomingCallActivity extends Activity {
             @Override
             public void successCallback(String channel, Object message) {
                 Intent intent = new Intent(IncomingCallActivity.this, MainActivity.class);
+                intent.putExtra(Constants.USER_NAME,username);
                 startActivity(intent);
             }
         });
