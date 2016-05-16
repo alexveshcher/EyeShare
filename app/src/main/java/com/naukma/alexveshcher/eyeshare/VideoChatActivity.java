@@ -76,7 +76,7 @@ public class VideoChatActivity extends Activity {
             PeerConnectionFactory.initializeAndroidGlobals(
                     this,  // Context
                     true,  // Audio Enabled
-                    false,  // Video Enabled
+                    true,  // Video Enabled
                     true,  // Hardware Acceleration Enabled
                     null); // Render EGL Context
         }
@@ -146,14 +146,14 @@ public class VideoChatActivity extends Activity {
         this.pnRTCClient.attachLocalMediaStream(mediaStream);
 
         // Listen on a channel. This is your "phone number," also set the max chat users.
-        //this.pnRTCClient.listenOn("Kevin");
-        //this.pnRTCClient.setMaxConnections(1);
+        this.pnRTCClient.listenOn(username);
+        this.pnRTCClient.setMaxConnections(5);
 
         // If the intent contains a number to dial, call it now that you are connected.
         //  Else, remain listening for a call.
         if (extras.containsKey(Constants.CALL_USER)) {
             String callUser = extras.getString(Constants.CALL_USER);
-            Log.d("logd_calluser",callUser);
+            Toast.makeText(getApplicationContext(),username + "->" +callUser ,Toast.LENGTH_SHORT).show();
             connectToUser(callUser);
         }
     }
@@ -256,10 +256,12 @@ public class VideoChatActivity extends Activity {
             VideoChatActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    //Toast.makeText(getApplicationContext(),"onlocalstream", Toast.LENGTH_SHORT).show();
                     if(role.equals("BLIND")) {
                         if(localStream.videoTracks.size()==0) return;
                         localStream.videoTracks.get(0).addRenderer(new VideoRenderer(localRender));
                     }
+                    //Toast.makeText(getApplicationContext(),"onlocalstream", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -284,7 +286,7 @@ public class VideoChatActivity extends Activity {
                         //VideoRendererGui.update(localRender, 72, 65, 25, 25, VideoRendererGui.ScalingType.SCALE_ASPECT_FIT, true);
                         else VideoRendererGui.update(localRender, 0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
                     }
-                    catch (Exception e){ e.printStackTrace(); }
+                    catch (Exception e){ Toast.makeText(getApplicationContext(),e.toString() + peer.getId(), Toast.LENGTH_SHORT).show(); }
                 }
             });
         }

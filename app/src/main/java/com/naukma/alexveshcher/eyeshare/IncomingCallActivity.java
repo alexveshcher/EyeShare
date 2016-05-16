@@ -60,6 +60,7 @@ public class IncomingCallActivity extends Activity {
 
         this.mPubNub  = new Pubnub(Constants.PUB_KEY, Constants.SUB_KEY);
         this.mPubNub.setUUID(this.username);
+        acceptCall();
     }
 
 
@@ -83,6 +84,15 @@ public class IncomingCallActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //rmk
+    public void acceptCall(){
+        Intent intent = new Intent(IncomingCallActivity.this, VideoChatActivity.class);
+        intent.putExtra(Constants.USER_NAME, this.username);
+        intent.putExtra(Constants.CALL_USER, this.callUser);
+        intent.putExtra(ROLE,"VOLUNTEER");
+        startActivity(intent);
     }
 
     public void acceptCall(View view){
