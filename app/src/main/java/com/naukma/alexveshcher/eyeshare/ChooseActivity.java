@@ -58,6 +58,7 @@ public class ChooseActivity extends Activity  {
 
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
         else
             Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
@@ -66,12 +67,16 @@ public class ChooseActivity extends Activity  {
     public void blind(View view) {
         //String callNum = "volunteer";
         //get random volunteer
-        String callNum = channels.get(new Random().nextInt(channels.size()));
-        Log.d("logd_random_res",callNum);
-        if(isInternetAvailable())
-            dispatchCall(callNum);
+        if(channels.size()>0){
+            String callNum = channels.get(new Random().nextInt(channels.size()));
+            Log.d("logd_random_res",callNum);
+            if(isInternetAvailable())
+                dispatchCall(callNum);
+            else
+                Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
+        }
         else
-            Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
+            showToast("No users online");
     }
 
 
@@ -209,20 +214,7 @@ public class ChooseActivity extends Activity  {
                 if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
                 JSONObject jsonMsg = (JSONObject) message;
                 try {
-                    JSONObject users = jsonMsg.getJSONObject("channels");
-                    Iterator<String> keys=users.keys();
-                    while(keys.hasNext())
-                    {
-                        String key=keys.next();
-                        Log.d("keys",key);
-                        //String value=users.getString(key);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    final String users_online = jsonMsg.getString("total_occupancy");
+                    final String users_online = jsonMsg.getString("total_channels");
                     Log.d("onlinne", users_online);
                     Thread timer = new Thread(){
                         public void run(){

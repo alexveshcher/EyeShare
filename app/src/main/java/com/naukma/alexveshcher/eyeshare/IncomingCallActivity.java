@@ -54,7 +54,7 @@ public class IncomingCallActivity extends Activity {
             finish();
             return;
         }
-        this.callUser = extras.getString(Constants.CALL_USER, "");
+        this.callUser = extras.getString(Constants.CALL_USER);
         this.mCallerID = (TextView) findViewById(R.id.caller_id);
         this.mCallerID.setText(this.callUser);
 

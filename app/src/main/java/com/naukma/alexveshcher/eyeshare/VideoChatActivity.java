@@ -65,7 +65,7 @@ public class VideoChatActivity extends Activity {
             finish();
             return;
         }
-        this.username      = extras.getString(Constants.USER_NAME, "");
+        this.username      = extras.getString(Constants.USER_NAME);
         this.mCallStatus   = (TextView) findViewById(R.id.call_status);
 
 
@@ -146,13 +146,14 @@ public class VideoChatActivity extends Activity {
         this.pnRTCClient.attachLocalMediaStream(mediaStream);
 
         // Listen on a channel. This is your "phone number," also set the max chat users.
-        this.pnRTCClient.listenOn("Kevin");
-        this.pnRTCClient.setMaxConnections(1);
+        //this.pnRTCClient.listenOn("Kevin");
+        //this.pnRTCClient.setMaxConnections(1);
 
         // If the intent contains a number to dial, call it now that you are connected.
         //  Else, remain listening for a call.
         if (extras.containsKey(Constants.CALL_USER)) {
-            String callUser = extras.getString(Constants.CALL_USER, "");
+            String callUser = extras.getString(Constants.CALL_USER);
+            Log.d("logd_calluser",callUser);
             connectToUser(callUser);
         }
     }
@@ -301,7 +302,14 @@ public class VideoChatActivity extends Activity {
                 }
             });
             try {Thread.sleep(1500);} catch (InterruptedException e){e.printStackTrace();}
-            Intent intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
+            Intent intent;
+            if(role.equals("BLIND")){
+                intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
+            }
+            else {
+                intent = new Intent(VideoChatActivity.this, MainActivity.class);
+                intent.putExtra(Constants.USER_NAME,username);
+            }
             startActivity(intent);
             finish();
         }
