@@ -21,13 +21,20 @@ import com.pubnub.api.PubnubException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ChooseActivity extends Activity {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+public class ChooseActivity extends Activity  {
     public final static String ROLE = "ROLE";
 
     private Pubnub mPubNub;
     private String username = "blind";
     private String stdByChannel;
     ///private String users_online = "nil";
+    //private String user = "nouser";
+    private List<String> channels = new ArrayList<>();
     TextView view;
 
     @Override
@@ -38,13 +45,17 @@ public class ChooseActivity extends Activity {
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
         initPubNub();
         view = (TextView) findViewById(R.id.online);
+        getOnlineUsersCount();
         getOnlineUsers();
+
+
+        //showToast(user);
     }
 
     /**When user clicks 'I can help' */
     public void volunteer(View view){
         String username = "volunteer";
-
+        //showToast(channels.get(0)+channels.get(1));
         if(isInternetAvailable()){
             SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
             SharedPreferences.Editor edit = sp.edit();
@@ -59,7 +70,10 @@ public class ChooseActivity extends Activity {
     }
 
     public void blind(View view) {
-        String callNum = "volunteer";
+        //String callNum = "volunteer";
+        //get random volunteer
+        String callNum = channels.get(new Random().nextInt(channels.size()));
+        Log.d("logd_random_res",callNum);
         if(isInternetAvailable())
             dispatchCall(callNum);
         else
@@ -77,7 +91,7 @@ public class ChooseActivity extends Activity {
      * @param callNum Number to publish a call to.
      */
     public void dispatchCall(final String callNum){
-        final String callNumStdBy = callNum + Constants.STDBY_SUFFIX;
+        final String callNumStdBy = callNum+ Constants.STDBY_SUFFIX;
         this.mPubNub.hereNow(callNumStdBy, new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
@@ -196,7 +210,7 @@ public class ChooseActivity extends Activity {
     }
 
 
-    private void getOnlineUsers(){
+    private void getOnlineUsersCount(){
         mPubNub.hereNow(true, false, new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
@@ -204,7 +218,19 @@ public class ChooseActivity extends Activity {
                 if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
                 JSONObject jsonMsg = (JSONObject) message;
                 try {
-                    //Ignore Signaling messages.
+                    JSONObject users = jsonMsg.getJSONObject("channels");
+                    Iterator<String> keys=users.keys();
+                    while(keys.hasNext())
+                    {
+                        String key=keys.next();
+                        Log.d("keys",key);
+                        //String value=users.getString(key);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
                     final String users_online = jsonMsg.getString("total_occupancy");
                     Log.d("onlinne", users_online);
                     Thread timer = new Thread(){
@@ -214,11 +240,8 @@ public class ChooseActivity extends Activity {
                                 @Override
                                 public void run() {
                                     view.setText("Online: "+users_online);
-                                    //title.clearComposingText();//not useful
-
                                 }
                             });
-
                         }
                     };
                     timer.start();
@@ -228,6 +251,38 @@ public class ChooseActivity extends Activity {
                 }
             }
 
+            @Override
+            public void errorCallback(String channel, PubnubError error) {
+                Log.d("lolod","HERE NOW : " + error);
+            }
+        });
+    }
+
+    private void getOnlineUsers(){
+        mPubNub.hereNow(true, false, new Callback() {
+            @Override
+            public void successCallback(String channel, Object message) {
+                Log.d("lolo","HERE NOW : " + message);
+                if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
+                JSONObject jsonMsg = (JSONObject) message;
+                try {
+                    JSONObject users = jsonMsg.getJSONObject("channels");
+                    Iterator<String> keys=users.keys();
+                    while(keys.hasNext())
+                    {
+                        String key=keys.next();
+                        String s2 = key.substring(0,key.length()-6);
+
+
+                        Log.d("keys",s2);
+                        channels.add(s2);
+                        //user=key;
+                        //mutableMessage.setValue(key);
+                    }
+                } catch (JSONException e) {
+                    Log.d("err",e.toString());
+                }
+            }
             @Override
             public void errorCallback(String channel, PubnubError error) {
                 Log.d("lolod","HERE NOW : " + error);
