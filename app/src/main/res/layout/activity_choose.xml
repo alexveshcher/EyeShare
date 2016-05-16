@@ -28,4 +28,15 @@
         android:layout_alignStart="@+id/blind"
         android:layout_marginTop="36dp"
         android:onClick="volunteer"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/online"
+        android:id="@+id/online"
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="30dp" />
 </RelativeLayout>

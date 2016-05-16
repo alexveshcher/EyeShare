@@ -22,5 +22,6 @@
     <string name="i_can_help">I can help</string>
     <string name="i_need_help">I need help</string>
     <string name="your_help_is_needed">Your help is needed</string>
+    <string name="online">Online:</string>
 
 </resources>

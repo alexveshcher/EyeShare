@@ -48,18 +48,27 @@ public class MainActivity extends Activity {
         this.mUsernameTV.setText(this.username);
         initPubNub();
 
-        /*
+
         mPubNub.hereNow(true, false, new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
                 Log.d("lolo","HERE NOW : " + message);
+                if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
+                JSONObject jsonMsg = (JSONObject) message;
+                try {
+                    //Ignore Signaling messages.
+                    String users_online = jsonMsg.getString("total_occupancy");
+                    Log.d("onlinne", users_online);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void errorCallback(String channel, PubnubError error) {
                 Log.d("lolod","HERE NOW : " + error);
             }
-        });*/
+        });
     }
 
 

@@ -1,11 +1,15 @@
 package com.naukma.alexveshcher.eyeshare;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.naukma.alexveshcher.eyeshare.util.Constants;
@@ -23,6 +27,8 @@ public class ChooseActivity extends Activity {
     private Pubnub mPubNub;
     private String username = "blind";
     private String stdByChannel;
+    ///private String users_online = "nil";
+    TextView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +37,33 @@ public class ChooseActivity extends Activity {
 
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
         initPubNub();
+        view = (TextView) findViewById(R.id.online);
+        getOnlineUsers();
     }
 
     /**When user clicks 'I can help' */
     public void volunteer(View view){
         String username = "volunteer";
 
+        if(isInternetAvailable()){
+            SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putString(Constants.USER_NAME, username);
+            edit.apply();
 
-        SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putString(Constants.USER_NAME, username);
-        edit.apply();
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
     }
 
     public void blind(View view) {
         String callNum = "volunteer";
-        dispatchCall(callNum);
+        if(isInternetAvailable())
+            dispatchCall(callNum);
+        else
+            Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -179,6 +193,57 @@ public class ChooseActivity extends Activity {
         } catch (JSONException e){
             e.printStackTrace();
         }
+    }
+
+
+    private void getOnlineUsers(){
+        mPubNub.hereNow(true, false, new Callback() {
+            @Override
+            public void successCallback(String channel, Object message) {
+                Log.d("lolo","HERE NOW : " + message);
+                if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
+                JSONObject jsonMsg = (JSONObject) message;
+                try {
+                    //Ignore Signaling messages.
+                    final String users_online = jsonMsg.getString("total_occupancy");
+                    Log.d("onlinne", users_online);
+                    Thread timer = new Thread(){
+                        public void run(){
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    view.setText("Online: "+users_online);
+                                    //title.clearComposingText();//not useful
+
+                                }
+                            });
+
+                        }
+                    };
+                    timer.start();
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void errorCallback(String channel, PubnubError error) {
+                Log.d("lolod","HERE NOW : " + error);
+            }
+        });
+    }
+
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+
     }
 
 }
