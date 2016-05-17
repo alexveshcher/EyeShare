@@ -58,6 +58,7 @@ public class IncomingCallActivity extends Activity {
         intent.putExtra(Constants.CALL_USER, this.callUser);
         intent.putExtra(ROLE,"VOLUNTEER");
         startActivity(intent);
+        
     }
 
     /**

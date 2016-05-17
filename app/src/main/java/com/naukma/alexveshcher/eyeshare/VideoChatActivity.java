@@ -233,7 +233,15 @@ public class VideoChatActivity extends Activity {
     }
 
     private void endCall() {
-        startActivity(new Intent(VideoChatActivity.this, ChooseActivity.class));
+        Intent intent;
+        if(role.equals("BLIND")){
+            intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
+        }
+        else {
+            intent = new Intent(VideoChatActivity.this, WaitActivity.class);
+            intent.putExtra(Constants.USER_NAME,username);
+        }
+        startActivity(intent);
         finish();
     }
 
@@ -294,16 +302,7 @@ public class VideoChatActivity extends Activity {
                 }
             });
             try {Thread.sleep(1500);} catch (InterruptedException e){e.printStackTrace();}
-            Intent intent;
-            if(role.equals("BLIND")){
-                intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
-            }
-            else {
-                intent = new Intent(VideoChatActivity.this, WaitActivity.class);
-                intent.putExtra(Constants.USER_NAME,username);
-            }
-            startActivity(intent);
-            finish();
+            endCall();
         }
     }
 }
