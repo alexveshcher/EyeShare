@@ -47,7 +47,7 @@ public class IncomingCallActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         if (extras==null || !extras.containsKey(Constants.CALL_USER)){
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WaitActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Need to pass username to IncomingCallActivity in intent extras (Constants.CALL_USER).",
                     Toast.LENGTH_SHORT).show();
@@ -112,7 +112,7 @@ public class IncomingCallActivity extends Activity {
         this.mPubNub.publish(this.callUser,hangupMsg, new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
-                Intent intent = new Intent(IncomingCallActivity.this, MainActivity.class);
+                Intent intent = new Intent(IncomingCallActivity.this, WaitActivity.class);
                 intent.putExtra(Constants.USER_NAME,username);
                 startActivity(intent);
             }

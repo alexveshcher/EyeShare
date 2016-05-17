@@ -32,18 +32,15 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.naukma.alexveshcher.eyeshare.MainActivity"
+            android:name=".WaitActivity"
             android:label="@string/app_name">
         </activity>
         <activity
             android:name="com.naukma.alexveshcher.eyeshare.VideoChatActivity"
             android:label="@string/title_activity_video_chat"
-            android:parentActivityName="com.naukma.alexveshcher.eyeshare.MainActivity"
+            android:parentActivityName=".WaitActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.naukma.alexveshcher.eyeshare.MainActivity" />
         </activity>
         <activity
             android:name="com.naukma.alexveshcher.eyeshare.IncomingCallActivity"

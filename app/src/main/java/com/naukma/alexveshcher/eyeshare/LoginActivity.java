@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
 
     /**
      * Takes the username from the EditText, check its validity and saves it if valid.
-     *   Then, redirects to the MainActivity.
+     *   Then, redirects to the WaitActivity.
      * @param view Button clicked to trigger call to joinChat
      */
     public void joinChat(View view){
@@ -65,7 +65,7 @@ public class LoginActivity extends Activity {
         edit.apply();
         */
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, WaitActivity.class);
         intent.putExtra(Constants.USER_NAME,username);
         startActivity(intent);
     }

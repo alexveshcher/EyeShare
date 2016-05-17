@@ -58,7 +58,7 @@ public class VideoChatActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         role = extras.getString("ROLE");
         if (extras == null || !extras.containsKey(Constants.USER_NAME)) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WaitActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Need to pass username to VideoChatActivity in intent extras (Constants.USER_NAME).",
                     Toast.LENGTH_SHORT).show();
@@ -309,7 +309,7 @@ public class VideoChatActivity extends Activity {
                 intent = new Intent(VideoChatActivity.this, ChooseActivity.class);
             }
             else {
-                intent = new Intent(VideoChatActivity.this, MainActivity.class);
+                intent = new Intent(VideoChatActivity.this, WaitActivity.class);
                 intent.putExtra(Constants.USER_NAME,username);
             }
             startActivity(intent);

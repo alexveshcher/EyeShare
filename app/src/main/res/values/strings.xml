@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AndroidRTC</string>
+    <string name="app_name">EyeShare</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_video_chat">Video Call</string>
@@ -23,5 +23,6 @@
     <string name="i_need_help">I need help</string>
     <string name="your_help_is_needed">Your help is needed</string>
     <string name="online">Online:</string>
+    <string name="username1">Username</string>
 
 </resources>

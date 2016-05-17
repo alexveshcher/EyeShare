@@ -20,21 +20,10 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_pubrtc"/>
 
-    <TextView
-        android:id="@+id/caller_id"
-        android:text="@string/incoming_call_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="26sp"
-        android:textColor="@color/white"
-        android:layout_margin="25dp"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="120dp">
 
         <ImageButton
             android:layout_width="0dp"

@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class MainActivity extends Activity {
+public class WaitActivity extends Activity {
     //private SharedPreferences mSharedPreferences;
     private String username;
     private String stdByChannel;
@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
      */
     private void dispatchIncomingCall(String userId){
         showToast("Call from: " + userId);
-        Intent intent = new Intent(MainActivity.this, IncomingCallActivity.class);
+        Intent intent = new Intent(WaitActivity.this, IncomingCallActivity.class);
         intent.putExtra(Constants.USER_NAME, username);
         intent.putExtra(Constants.CALL_USER, userId);
         startActivity(intent);
@@ -195,7 +195,7 @@ public class MainActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(WaitActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }

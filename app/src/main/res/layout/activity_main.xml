@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.naukma.alexveshcher.eyeshare.MainActivity"
+    tools:context=".WaitActivity"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/main_username"
-            android:text="Kevin"
+            android:text="@string/username1"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
@@ -27,13 +27,20 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Stay online"
         android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="40sp"
+        android:layout_centerInParent="true"
+        />
+    </RelativeLayout>
 
 
 </LinearLayout>

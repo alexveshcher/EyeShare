@@ -41,8 +41,7 @@
         android:textColor="#FFF"
         android:background="@color/pn_red"
         android:onClick="joinChat"
-        android:layout_below="@+id/login_username"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

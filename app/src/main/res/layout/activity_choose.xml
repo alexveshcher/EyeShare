@@ -10,24 +10,30 @@
     tools:context="com.naukma.alexveshcher.eyeshare.ChooseActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textSize="25sp"
+        android:textColor="#FFF"
+        android:background="@color/pn_red"
+        android:layout_alignParentStart="true"
         android:text="@string/i_need_help"
         android:id="@+id/blind"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:onClick="blind"
-        />
+        android:layout_below="@+id/online"
+        android:layout_above="@+id/volunteer"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/i_can_help"
         android:id="@+id/volunteer"
-        android:layout_below="@+id/blind"
-        android:layout_alignStart="@+id/blind"
-        android:layout_marginTop="36dp"
-        android:onClick="volunteer"/>
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textSize="25sp"
+        android:textColor="#FFF"
+        android:background="@color/pn_blue"
+        android:onClick="volunteer"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +42,5 @@
         android:id="@+id/online"
         android:textSize="30sp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="30dp" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
