@@ -58,13 +58,6 @@ public class LoginActivity extends Activity {
         if (!validUsername(username))
             return;
 
-        /*
-        SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putString(Constants.USER_NAME, username);
-        edit.apply();
-        */
-
         Intent intent = new Intent(this, WaitActivity.class);
         intent.putExtra(Constants.USER_NAME,username);
         startActivity(intent);

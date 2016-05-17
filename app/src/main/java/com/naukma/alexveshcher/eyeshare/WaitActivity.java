@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 
 public class WaitActivity extends Activity {
-    //private SharedPreferences mSharedPreferences;
     private String username;
     private String stdByChannel;
     private Pubnub mPubNub;
@@ -34,58 +33,22 @@ public class WaitActivity extends Activity {
         Intent intent = getIntent();
         username = intent.getStringExtra(Constants.USER_NAME);
 
-        /*
-        this.mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        if (!this.mSharedPreferences.contains(Constants.USER_NAME)){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }*/
-        //this.username     = this.mSharedPreferences.getString(Constants.USER_NAME, "");
         this.stdByChannel = this.username + Constants.STDBY_SUFFIX;
         this.mUsernameTV  = (TextView) findViewById(R.id.main_username);
         this.mUsernameTV.setText(this.username);
         initPubNub();
-
-
-        mPubNub.hereNow(true, false, new Callback() {
-            @Override
-            public void successCallback(String channel, Object message) {
-                Log.d("lolo","HERE NOW : " + message);
-                if (!(message instanceof JSONObject)) return; // Ignore if not JSONObject
-                JSONObject jsonMsg = (JSONObject) message;
-                try {
-                    //Ignore Signaling messages.
-                    String users_online = jsonMsg.getString("total_occupancy");
-                    Log.d("onlinne", users_online);
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void errorCallback(String channel, PubnubError error) {
-                Log.d("lolod","HERE NOW : " + error);
-            }
-        });
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch(id){
             case R.id.action_settings:
                 return true;
@@ -206,9 +169,6 @@ public class WaitActivity extends Activity {
      */
     public void signOut(){
         this.mPubNub.unsubscribeAll();
-        //SharedPreferences.Editor edit = this.mSharedPreferences.edit();
-        //edit.remove(Constants.USER_NAME);
-        //edit.apply();
         Intent intent = new Intent(this, ChooseActivity.class);
         startActivity(intent);
     }

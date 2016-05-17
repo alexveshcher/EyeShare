@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.naukma.alexveshcher.eyeshare.util.Constants;
 import com.pubnub.api.Callback;
@@ -23,76 +21,35 @@ public class IncomingCallActivity extends Activity {
     //private SharedPreferences mSharedPreferences;
     private String username;
     private String callUser;
-
     private Pubnub mPubNub;
-    private TextView mCallerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_call);
 
-        Intent intent1 = getIntent();
-        username = intent1.getStringExtra(Constants.USER_NAME);
-
-        /*this.mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        if (!this.mSharedPreferences.contains(Constants.USER_NAME)){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-        this.username = this.mSharedPreferences.getString(Constants.USER_NAME, "");
-        */
-
+        Intent intent = getIntent();
+        username = intent.getStringExtra(Constants.USER_NAME);
         Bundle extras = getIntent().getExtras();
-        if (extras==null || !extras.containsKey(Constants.CALL_USER)){
-            Intent intent = new Intent(this, WaitActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "Need to pass username to IncomingCallActivity in intent extras (Constants.CALL_USER).",
-                    Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
         this.callUser = extras.getString(Constants.CALL_USER);
-        this.mCallerID = (TextView) findViewById(R.id.caller_id);
-        this.mCallerID.setText(this.callUser);
-
         this.mPubNub  = new Pubnub(Constants.PUB_KEY, Constants.SUB_KEY);
         this.mPubNub.setUUID(this.username);
-        acceptCall();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_incoming_call, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    //rmk
-    public void acceptCall(){
-        Intent intent = new Intent(IncomingCallActivity.this, VideoChatActivity.class);
-        intent.putExtra(Constants.USER_NAME, this.username);
-        intent.putExtra(Constants.CALL_USER, this.callUser);
-        intent.putExtra(ROLE,"VOLUNTEER");
-        startActivity(intent);
     }
 
     public void acceptCall(View view){

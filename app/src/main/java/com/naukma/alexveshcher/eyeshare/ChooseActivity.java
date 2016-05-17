@@ -31,8 +31,6 @@ public class ChooseActivity extends Activity  {
     private Pubnub mPubNub;
     private String username = "blind";
     private String stdByChannel;
-    ///private String users_online = "nil";
-    //private String user = "nouser";
     private List<String> channels = new ArrayList<>();
     TextView view;
 
@@ -49,13 +47,7 @@ public class ChooseActivity extends Activity  {
 
     /**When user clicks 'I can help' */
     public void volunteer(View view){
-        //showToast(channels.get(0)+channels.get(1));
         if(isInternetAvailable()){
-            //SharedPreferences sp = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-            //SharedPreferences.Editor edit = sp.edit();
-            //edit.putString(Constants.USER_NAME, username);
-            //edit.apply();
-
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -65,11 +57,10 @@ public class ChooseActivity extends Activity  {
     }
 
     public void blind(View view) {
-        //String callNum = "volunteer";
         //get random volunteer
         if(channels.size()>0){
             String callNum = channels.get(new Random().nextInt(channels.size()));
-            Log.d("logd_random_res",callNum);
+            //Log.d("logd_random_res",callNum);
             if(isInternetAvailable())
                 dispatchCall(callNum);
             else
@@ -80,15 +71,6 @@ public class ChooseActivity extends Activity  {
     }
 
 
-    /**TODO: Debate who calls who. Should one be on standby? Or use State API for busy/available
-     * Check that user is online. If they are, dispatch the call by publishing to their standby
-     *   channel. If the publish was successful, then change activities over to the video chat.
-     * The called user will then have the option to accept of decline the call. If they accept,
-     *   they will be brought to the video chat activity as well, to connect video/audio. If
-     *   they decline, a hangup will be issued, and the VideoChat adapter's onHangup callback will
-     *   be invoked.
-     * @param callNum Number to publish a call to.
-     */
     public void dispatchCall(final String callNum){
         final String callNumStdBy = callNum+ Constants.STDBY_SUFFIX;
         this.mPubNub.hereNow(callNumStdBy, new Callback() {
@@ -181,15 +163,6 @@ public class ChooseActivity extends Activity  {
         }
     }
 
-    /*
-    private void dispatchIncomingCall(String userId){
-        showToast("Call from: " + userId);
-        Intent intent = new Intent(ChooseActivity.this, IncomingCallActivity.class);
-        intent.putExtra(Constants.USER_NAME, username);
-        intent.putExtra(Constants.CALL_USER, userId);
-        startActivity(intent);
-    }*/
-
     private void setUserStatus(String status){
         try {
             JSONObject state = new JSONObject();
@@ -253,7 +226,6 @@ public class ChooseActivity extends Activity  {
                     Iterator<String> keys=users.keys();
                     while(keys.hasNext()) {
                         String key=keys.next();
-                        //rmk
                         if(key.length()>6 && !key.equals("blind-stdby") && !key.equals("volunteer-stdby")&& !key.equals("volunteer")) {
                             String s2 = key.substring(0, key.length() - 6);
                             Log.d("keys",s2);
@@ -271,6 +243,7 @@ public class ChooseActivity extends Activity  {
         });
     }
 
+    //shows connection to the Internet
     public boolean isInternetAvailable() {
         ConnectivityManager cm =
                 (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
