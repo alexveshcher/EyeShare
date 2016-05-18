@@ -258,12 +258,10 @@ public class VideoChatActivity extends Activity {
             VideoChatActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    //Toast.makeText(getApplicationContext(),"onlocalstream", Toast.LENGTH_SHORT).show();
                     if(role.equals("BLIND")) {
                         if(localStream.videoTracks.size()==0) return;
                         localStream.videoTracks.get(0).addRenderer(new VideoRenderer(localRender));
                     }
-                    //Toast.makeText(getApplicationContext(),"onlocalstream", Toast.LENGTH_SHORT).show();
                 }
             });
         }

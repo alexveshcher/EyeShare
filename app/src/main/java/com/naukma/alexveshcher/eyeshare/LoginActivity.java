@@ -25,11 +25,11 @@ public class LoginActivity extends Activity {
 
         mUsername = (EditText) findViewById(R.id.login_username);
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null){
             String lastUsername = extras.getString("oldUsername", "");
             mUsername.setText(lastUsername);
-        }
+        }*/
     }
 
 
@@ -61,6 +61,7 @@ public class LoginActivity extends Activity {
         Intent intent = new Intent(this, WaitActivity.class);
         intent.putExtra(Constants.USER_NAME,username);
         startActivity(intent);
+        finish();
     }
 
     /**

@@ -252,7 +252,5 @@ public class ChooseActivity extends Activity  {
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
         return isConnected;
-
     }
-
 }

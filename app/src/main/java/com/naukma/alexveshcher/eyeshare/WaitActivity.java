@@ -118,8 +118,7 @@ public class WaitActivity extends Activity {
                 }
             });
         } catch (PubnubException e){
-            Log.d("HERE","HEREEEE");
-            e.printStackTrace();
+            Log.d("HERE", e.toString());
         }
     }
 
@@ -146,7 +145,7 @@ public class WaitActivity extends Activity {
                 }
             });
         } catch (JSONException e){
-            e.printStackTrace();
+            Log.d("errror_setUserStatus",e.toString());
         }
     }
 
