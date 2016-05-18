@@ -57,7 +57,6 @@ public class LoginActivity extends Activity {
         String username = mUsername.getText().toString();
         if (!validUsername(username))
             return;
-
         Intent intent = new Intent(this, WaitActivity.class);
         intent.putExtra(Constants.USER_NAME,username);
         startActivity(intent);

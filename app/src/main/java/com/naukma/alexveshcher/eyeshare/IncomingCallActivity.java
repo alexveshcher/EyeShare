@@ -18,7 +18,6 @@ import me.kevingleason.pnwebrtc.PnPeerConnectionClient;
 /** Activity starts for volunteer when blind needs help */
 public class IncomingCallActivity extends Activity {
     public final static String ROLE = "ROLE";
-    //private SharedPreferences mSharedPreferences;
     private String username;
     private String callUser;
     private Pubnub mPubNub;
@@ -30,8 +29,7 @@ public class IncomingCallActivity extends Activity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(Constants.USER_NAME);
-        Bundle extras = getIntent().getExtras();
-        this.callUser = extras.getString(Constants.CALL_USER);
+        this.callUser = intent.getStringExtra(Constants.CALL_USER);
         this.mPubNub  = new Pubnub(Constants.PUB_KEY, Constants.SUB_KEY);
         this.mPubNub.setUUID(this.username);
     }

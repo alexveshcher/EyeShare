@@ -52,8 +52,7 @@ public class ChooseActivity extends Activity  {
             startActivity(intent);
             finish();
         }
-        else
-            Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
     }
 
     public void blind(View view) {
@@ -66,8 +65,7 @@ public class ChooseActivity extends Activity  {
             else
                 Toast.makeText(getApplicationContext(), "You are not online", Toast.LENGTH_SHORT).show();
         }
-        else
-            showToast("No users online");
+        else showToast("No users online");
     }
 
 
