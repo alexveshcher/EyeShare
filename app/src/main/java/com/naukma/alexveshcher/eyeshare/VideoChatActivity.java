@@ -33,6 +33,7 @@ import me.kevingleason.pnwebrtc.PnRTCClient;
  * REQUIRED: The intent must contain a
  */
 public class VideoChatActivity extends Activity {
+    public String tag = "connn";
     public static final String VIDEO_TRACK_ID = "videoPN";
     public static final String AUDIO_TRACK_ID = "audioPN";
     public static final String LOCAL_MEDIA_STREAM_ID = "localStreamPN";
@@ -146,7 +147,7 @@ public class VideoChatActivity extends Activity {
         this.pnRTCClient.attachLocalMediaStream(mediaStream);
 
         // Listen on a channel. This is your "phone number," also set the max chat users.
-        this.pnRTCClient.listenOn(username);
+        this.pnRTCClient.listenOn("levi");
         this.pnRTCClient.setMaxConnections(5);
 
         // If the intent contains a number to dial, call it now that you are connected.
@@ -262,6 +263,7 @@ public class VideoChatActivity extends Activity {
                         if(localStream.videoTracks.size()==0) return;
                         localStream.videoTracks.get(0).addRenderer(new VideoRenderer(localRender));
                     }
+                    Log.d(tag+"onLocalStream ok","onLocalStream ok");
                 }
             });
         }
@@ -282,7 +284,9 @@ public class VideoChatActivity extends Activity {
                         }
                         else VideoRendererGui.update(localRender, 0, 0, 100, 100, VideoRendererGui.ScalingType.SCALE_ASPECT_FILL, false);
                     }
-                    catch (Exception e){ Toast.makeText(getApplicationContext(),e.toString() + peer.getId(), Toast.LENGTH_SHORT).show(); }
+                    catch (Exception e){
+                        Log.d(tag,e.toString());
+                        Toast.makeText(getApplicationContext(),e.toString() + peer.getId(), Toast.LENGTH_SHORT).show(); }
                 }
             });
         }
